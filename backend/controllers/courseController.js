@@ -30,6 +30,24 @@ const getCourse = async (req, res) => {
 const createCourse = async (req, res) => {
     const {course_name, course_description, course_fee, subject_area, required_result, age_limit, published, course_image} = req.body
 
+    let emptyFields = []
+
+    if(!course_name) {
+        emptyFields.push('Course Name')
+    }
+    if(!course_description) {
+        emptyFields.push('Description')
+    }
+    if(!course_fee) {
+        emptyFields.push('Course Fee')
+    }
+    if(!subject_area) {
+        emptyFields.push('Subject Area')
+    }
+    if(emptyFields.length > 0){
+        return res.status(400).json({error: 'Please fill in all the fields', emptyFields})
+    }
+
     // add doc to db
     try {
         const course = await Course.create({course_name, course_description, course_fee, subject_area, required_result, age_limit, published, course_image})

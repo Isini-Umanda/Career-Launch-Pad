@@ -1,5 +1,9 @@
 import { useCoursesContext } from "../hooks/useCoursesContext"
 
+// date fns
+//import { formatDistance, subDays } from "date-fns"
+import { format } from 'date-fns'
+
 const CourseDetails = ({ course }) => {
     const { dispatch } = useCoursesContext()
 
@@ -21,7 +25,7 @@ const CourseDetails = ({ course }) => {
             <p className=" text-sm">{course.subject_area}</p>
             <p className=" text-sm">{course.course_fee}</p>
             <p className=" text-sm">{course.required_result}</p>
-            <p className="text-xs text-gray-400">{course.createdAt}</p>
+            <p className="text-xs text-gray-400">{format(new Date(course.createdAt), 'yyyy-MM-dd')}</p>
             <div className="p-5">
               <span onClick={handleClick}className="bg-red-200 rounded-full hover:bg-red-400 justify-start py-2 px-3 text-xs font-bold cursor-pointer tracking-wider">Delete</span>
             </div>
