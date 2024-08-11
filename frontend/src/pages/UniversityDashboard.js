@@ -5,6 +5,7 @@ import { useCoursesContext } from '../hooks/useCoursesContext'
 //components
 import CourseDetails from '../components/CourseDetails'
 import CourseForm from '../components/CourseForm'
+import Navbar from '../components/Navbar'
 
 export default function UniversityDashboard() {
     const { courses, dispatch } = useCoursesContext()
@@ -26,6 +27,7 @@ export default function UniversityDashboard() {
     
   return (
     <div>
+      <Navbar />
       <div className="grid grid-cols-4 gap-8 p-8">
         {courses && courses.map((course) => (
             <CourseDetails key={course._id} course={course} />

@@ -37,7 +37,7 @@ function App() {
             element={<UniSignup/>} 
           />
           <Route
-            path='/'
+            path='/UniversityDashboard'
             element={<UniversityDashboard />} 
           />
         </Routes>
