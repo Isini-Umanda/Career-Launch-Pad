@@ -54,18 +54,18 @@ uniSchema.statics.signup = async function (uni_name, uni_description, uni_email,
     if(!uni_name || !uni_description || !uni_email || !uni_password || !uni_hotline || !uni_link || !uni_address){
         throw Error('All fields must be required')
     }
-    if(!validator.isEmail(uni_email)) {
-        throw Error('Invalid email')
-    }
+     if(!validator.isEmail(uni_email)) {
+         throw Error('Invalid email')
+     }
     if(!validator.isStrongPassword(uni_password)) {
-        throw Error('Password must be at least 8 characters long, and must contain at least one')
+        throw Error('Password must be at least 8 characters long')
     }
-    if(!validator.isMobilePhone(uni_hotline)) {
-        throw Error('Invalid phone number')
-    }
-    if(!validator.isURL(uni_link)){
-        throw Error('Invalid URL')
-    }
+     if(!validator.isMobilePhone(uni_hotline)) {
+         throw Error('Invalid phone number')
+     }
+     if(!validator.isURL(uni_link)){
+         throw Error('Invalid URL')
+     }
 
     const exists = await this.findOne({ uni_email })
 

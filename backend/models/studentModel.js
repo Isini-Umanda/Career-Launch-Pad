@@ -55,7 +55,7 @@ stuSchema.statics.signup = async function (stu_fname, stu_lname, stu_email, stu_
         throw Error('Invalid email')
     }
     if(!validator.isStrongPassword(stu_password)) {
-        throw Error('Password must be at least 8 characters long, and must contain at least one')
+        throw Error('Password must be at least 8 characters long')
     }
     if(!validator.isDecimal(z_score)) {
         throw Error('Invalid z-score')
