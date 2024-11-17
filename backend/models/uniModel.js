@@ -20,7 +20,7 @@ const uniSchema = new Schema({
         unique: true,
         trim:true,
         lowercase:true,
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please provide a valid email address']
+         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please provide a valid email address']
     },
     uni_password: {
         type: String,
@@ -62,10 +62,10 @@ uniSchema.statics.signup = async function (uni_name, uni_description, uni_email,
     }
      if(!validator.isMobilePhone(uni_hotline)) {
          throw Error('Invalid phone number')
-     }
-     if(!validator.isURL(uni_link)){
+    }
+    if(!validator.isURL(uni_link)){
          throw Error('Invalid URL')
-     }
+    }
 
     const exists = await this.findOne({ uni_email })
 

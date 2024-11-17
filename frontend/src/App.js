@@ -9,6 +9,7 @@ import UniLogin from './pages/UniLogin';
 import UniSignup from './pages/UniSignup';
 import StuLogin from './pages/StuLogin';
 import StuSignup from './pages/StuSignup';
+import CareerQuiz from './pages/CareerQuiz';
 
 function App() {
   return (
@@ -39,6 +40,10 @@ function App() {
           <Route
             path='/UniversityDashboard'
             element={<UniversityDashboard />} 
+          />
+          <Route
+            path='/CareerQuiz'
+            element={<CareerQuiz/>}
           />
         </Routes>
        </div>
