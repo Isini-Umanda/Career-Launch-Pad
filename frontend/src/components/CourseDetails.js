@@ -1,4 +1,5 @@
 import { useCoursesContext } from "../hooks/useCoursesContext"
+import { useAuthContext } from "../hooks/useAuthContext"
 
 // date fns
 //import { formatDistance, subDays } from "date-fns"
@@ -6,10 +7,17 @@ import { format } from 'date-fns'
 
 const CourseDetails = ({ course }) => {
     const { dispatch } = useCoursesContext()
+    const { user } = useAuthContext()
 
     const handleClick = async () => {
+        if(!user) {
+            return
+        }
         const response = await fetch('/api/courses/' + course._id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+              }
         })
         const json = await response.json()
 

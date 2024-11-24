@@ -7,8 +7,11 @@ const {
     updateCourse,
     deleteCourse
  } = require('../controllers/courseController')
+ const requireCourseAuth = require('../middleware/requireCourseAuth')
 
 const router = express.Router()
+
+router.use(requireCourseAuth)
 
 //GEt all Cources
 router.get('/', getCourses)

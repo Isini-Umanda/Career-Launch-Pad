@@ -1,10 +1,9 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { useAuthContext } from './hooks/useAuthContext';
 
 // pages & components
 import Home from './pages/Home';
-//import Navbar from './components/Navbar';
 import UniversityDashboard from './pages/UniversityDashboard';
-//import UniNavbar from './components/UniNavbar';
 import UniLogin from './pages/UniLogin';
 import UniSignup from './pages/UniSignup';
 import StuLogin from './pages/StuLogin';
@@ -12,39 +11,20 @@ import StuSignup from './pages/StuSignup';
 import CareerQuiz from './pages/CareerQuiz';
 
 function App() {
+  const { user } = useAuthContext();
+
   return (
     <div>
       <BrowserRouter>
        <div>
         <Routes>
-          <Route
-            path='/'
-            element={<Home/>} 
-          />
-          <Route
-            path='/StuLogin'
-            element={<StuLogin />} 
-          />
-          <Route
-            path='/StuSignup'
-            element={<StuSignup />} 
-          />
-          <Route
-            path='/UniLogin'
-            element={<UniLogin/>} 
-          />
-          <Route
-            path='/UniSignup'
-            element={<UniSignup/>} 
-          />
-          <Route
-            path='/UniversityDashboard'
-            element={<UniversityDashboard />} 
-          />
-          <Route
-            path='/CareerQuiz'
-            element={<CareerQuiz/>}
-          />
+          <Route path='/' element={<Home/>} />
+          <Route path='/StuSignup' element={ <StuSignup /> } />
+          <Route path='/StuLogin' element={ <StuLogin /> } />
+          <Route path='/CareerQuiz' element={ user ? <CareerQuiz/> : <Navigate to="/StuLogin" />} />
+          <Route path='/UniSignup' element={ <UniSignup/> } />
+          <Route path='/UniLogin' element={ <UniLogin/> } />
+          <Route path='/UniversityDashboard' element={ user ? <UniversityDashboard/> : <Navigate to="/UniLogin" />} />
         </Routes>
        </div>
       </BrowserRouter>

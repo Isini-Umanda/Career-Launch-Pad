@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { useCoursesContext } from '../hooks/useCoursesContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const CourseForm = () => {
     const { dispatch } = useCoursesContext()
+    const { user } = useAuthContext()
     const [course_name, setCourse_name] = useState('')
     const [course_description, setCourse_description] = useState('')
     const [course_fee, setCourse_fee] = useState('')
@@ -15,13 +17,19 @@ const CourseForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        if(!user) {
+            setError('Please login to add a course')
+            return
+        }
+
         const course = {course_name, course_description, course_fee, subject_area, required_result, age_limit}
 
         const response = await fetch('/api/courses', {
             method: 'POST',
             body: JSON.stringify(course),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         })
         const json = await response.json()

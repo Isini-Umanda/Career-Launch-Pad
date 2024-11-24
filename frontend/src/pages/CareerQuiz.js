@@ -141,7 +141,7 @@ const Survey = () => {
   const partQuestions = {
     1: part1,
     2: part2,
-    3: part3,
+    3: part3, 
     4: part4,
     5: part5,
     6: part6,

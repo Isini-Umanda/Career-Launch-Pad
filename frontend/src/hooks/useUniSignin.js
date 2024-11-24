@@ -3,21 +3,21 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-export const useSignup = () => {
+export const useUniLogin = () => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
     const { dispatch } = useAuthContext()
     const navigate = useNavigate();
 
 
-    const uniSignup = async (uni_name, uni_description, uni_email, uni_password, uni_hotline, uni_link, uni_address) => {
+    const uniLogin = async (uni_email, uni_password) => {
         setIsLoading(true)
         setError(null)
 
-        const response = await fetch('/api/uniUser/uniSignup', {
+        const response = await fetch('/api/uniUser/uniLogin', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ uni_name, uni_description, uni_email, uni_password, uni_hotline, uni_link, uni_address })
+            body: JSON.stringify({uni_email, uni_password})
         })
 
         const json = await response.json()
@@ -27,18 +27,21 @@ export const useSignup = () => {
             setError(json.error)
         }
         if(response.ok) {
+            
+            localStorage.removeItem('uniUser');
+
             //save the user to local storage
             localStorage.setItem('uniUser', JSON.stringify(json))
 
             //update the auth context
-            dispatch({type: 'LOGIN', payload: {user: json, userType: 'university'}});
+            dispatch({type: 'LOGIN', payload: {user: json, userType: 'university' }});
 
             setIsLoading(false)
 
             //navigate to login page
-            navigate('/UniLogin');
+            navigate('/UniversityDashboard');
         }
     }
 
-    return { uniSignup, isLoading, error }
+    return { uniLogin, isLoading, error }
 }

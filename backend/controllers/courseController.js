@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 
 //GEt all Cources
 const getCourses = async (req, res) => {
-    const courses = await Course.find({}).sort({createdAt: -1})
+    const user_id = req.user._id
+    const courses = await Course.find({user_id}).sort({createdAt: -1})
 
     res.status(200).json(courses)
 }
@@ -50,7 +51,8 @@ const createCourse = async (req, res) => {
 
     // add doc to db
     try {
-        const course = await Course.create({course_name, course_description, course_fee, subject_area, required_result, age_limit, published, course_image})
+        const user_id = req.user._id
+        const course = await Course.create({course_name, course_description, course_fee, subject_area, required_result, age_limit, published, course_image, user_id})
         res.status(200).json(course)
     }catch (error) {
         res.status(400).json({error: error.message})

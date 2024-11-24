@@ -1,13 +1,30 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from 'react-router-dom';
-import LoginRegistrationDeco from "../components/LoginRegistrationDeco"
+import LoginRegistrationDeco from "../components/LoginRegistrationDeco";
+import { useUniLogin } from "../hooks/useUniSignin"
+
 
 const UniLogin = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const { uniLogin, error, isLoading } = useUniLogin();
+    const navigate = useNavigate();
 
+    useEffect(() => {
+        // Clear form inputs when component mounts
+        setEmail('');
+        setPassword('');
+    }, []);
+
+    
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        await uniLogin(email, password);
+
+        // Clear the input fields after a successful login
+        setEmail('');
+        setPassword('');
     }
 
     const handleSignupClick = async (e) => {
@@ -15,7 +32,7 @@ const UniLogin = () => {
         navigate('/UniSignup', { replace: true })
     }
 
-    const navigate = useNavigate();
+    
 
     return (
         <div className="flex w-full h-screen">
@@ -31,7 +48,8 @@ const UniLogin = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
-                            placeholder="Enter your email"/>
+                            placeholder="Enter your email"
+                            autoComplete="off"/>
                     </div>
                     <div className='flex flex-col mt-4'>
                         <label className='text-lg font-medium'>Password</label>
@@ -40,12 +58,14 @@ const UniLogin = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
                             placeholder="Enter your email"
-                            type={"password"}/>
+                            type={"password"}
+                            autoComplete="off"/>
                     </div>
                     <div className='mt-8 flex flex-col gap-y-4'>
-                    <button 
-                        onSubmit={handleSubmit}
+                    <button disabled = {isLoading}
+                        onClick={handleSubmit}
                         className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01]  ease-in-out transform py-3 bg-emerald-600 rounded-xl text-white font-bold text-lg'>Sign in</button>
+                        {error && <div className="p-2 bg-red-100 rounded-md border-red-200 shadow-lg">{error}</div>}
                     </div>
                     <div className='mt-8 flex justify-center items-center'>
                     <p className='font-medium text-base'>Don't have an account?</p>

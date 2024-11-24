@@ -1,13 +1,23 @@
 import { useState } from "react"
 import { useNavigate } from 'react-router-dom';
 import LoginRegistrationDeco from "../components/LoginRegistrationDeco"
+import { useStuLogin } from "../hooks/useStuSignin"
+
 
 const StuLogin = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const { stuLogin, error, isLoading } = useStuLogin();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        await stuLogin(email, password);
+
+        // Clear the input fields after successful login
+        setEmail('');
+        setPassword('');
     }
 
     const handleSignupClick = async (e) => {
@@ -43,9 +53,10 @@ const StuLogin = () => {
                             type={"password"}/>
                     </div>
                     <div className='mt-8 flex flex-col gap-y-4'>
-                    <button 
-                        onSubmit={handleSubmit}
+                    <button disabled = {isLoading}
+                        onClick={handleSubmit}
                         className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01]  ease-in-out transform py-3 bg-emerald-600 rounded-xl text-white font-bold text-lg'>Sign in</button>
+                        {error && <div className="p-2 bg-red-100 rounded-md border-red-200 shadow-lg">{error}</div>}
                     </div>
                     <div className='mt-8 flex justify-center items-center'>
                     <p className='font-medium text-base'>Don't have an account?</p>

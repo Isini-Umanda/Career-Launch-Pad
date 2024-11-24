@@ -11,11 +11,11 @@ const HomeContent = () => {
   const { ref: whyJoinUsUniversityRef, inView: whyJoinUsUniversityInView } = useInView({ triggerOnce: true });
 
   const handleUniSignupClick = () => {
-    navigate('/StuSignup');
+    navigate('/UniSignup');
   };
 
   const handleStuSignupClick = () => {
-    navigate('/CareerQuiz');
+    navigate('/StuSignup');
   };
 
   return (
