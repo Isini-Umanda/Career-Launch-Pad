@@ -3,6 +3,7 @@ const express = require('express')
 const { 
     createCourse,
     getCourses,
+    getAllCourses,
     getCourse,
     updateCourse,
     deleteCourse
@@ -11,10 +12,12 @@ const {
 
 const router = express.Router()
 
+router.get('/all', getAllCourses)
+
 router.use(requireCourseAuth)
 
 //GEt all Cources
-router.get('/', getCourses)
+router.get('/user', getCourses)
 
 //GEt a single Cource
 router.get('/:id', getCourse) 

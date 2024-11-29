@@ -1,13 +1,25 @@
 const Course = require('../models/courseModel')
 const mongoose = require('mongoose')
 
-//GEt all Cources
+
+//GEt all Cources for AllCourses page
+const getAllCourses = async (req, res) => {
+    try {
+        const courses = await Course.find({}); // Fetch all courses
+        res.status(200).json(courses);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch courses' });
+    }
+}
+
+//GEt all Cources for university dashboard
 const getCourses = async (req, res) => {
     const user_id = req.user._id
     const courses = await Course.find({user_id}).sort({createdAt: -1})
 
     res.status(200).json(courses)
 }
+
 
 //GEt a single Course
 const getCourse = async (req, res) => {
@@ -96,6 +108,7 @@ const updateCourse = async (req, res) => {
 }
 
 module.exports = {
+    getAllCourses,
     createCourse,
     getCourses,
     getCourse,

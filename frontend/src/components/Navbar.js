@@ -6,7 +6,7 @@ const Navbar = ({ activePath, onNavClick }) => {
 
   const navItems = [
     { name: 'Home', id: 'home', path: '/' },
-    { name: 'Courses', id: 'courses', path: '/CareerQuiz' },
+    { name: 'Courses', id: 'courses', path: '/AllCourses' },
     { name: 'Students', id: 'students', path: '/StuLogin' },
     { name: 'Universities', id: 'universities', path: '/UniLogin' }
   ];

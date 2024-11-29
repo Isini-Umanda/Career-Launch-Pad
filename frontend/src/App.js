@@ -9,6 +9,7 @@ import UniSignup from './pages/UniSignup';
 import StuLogin from './pages/StuLogin';
 import StuSignup from './pages/StuSignup';
 import CareerQuiz from './pages/CareerQuiz';
+import AllCourses from './pages/AllCourses';
 
 function App() {
   const { user } = useAuthContext();
@@ -25,6 +26,7 @@ function App() {
           <Route path='/UniSignup' element={ <UniSignup/> } />
           <Route path='/UniLogin' element={ <UniLogin/> } />
           <Route path='/UniversityDashboard' element={ user ? <UniversityDashboard/> : <Navigate to="/UniLogin" />} />
+          <Route path='/AllCourses' element={ <AllCourses/> } />
         </Routes>
        </div>
       </BrowserRouter>
