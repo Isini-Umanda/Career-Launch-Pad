@@ -17,8 +17,12 @@ def predict():
     try:
         # Parse incoming request JSON payload
         data = request.get_json()
+        # Validate that all questions have been answered
+        features = data.get('features')
+        if not features or len(features) != 10 or any(feature == 0 for feature in features):
+            return jsonify({'error': 'Please answer all questions'}), 400
         # Extract features from the JSON payload
-        features = np.array(data['features']).reshape(1, -1)  # Assuming 'features' is a list
+        features = np.array(features).reshape(1, -1)  # Assuming 'features' is a list
         # Predict using the trained model
         prediction = model.predict(features)
         # Send back the prediction as a response
