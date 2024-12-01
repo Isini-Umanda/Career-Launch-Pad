@@ -18,7 +18,7 @@ export default function UniversityDashboard() {
 
     useEffect(() => {
         const fetchCourses = async () => {
-            const response = await fetch('/api/courses', {
+            const response = await fetch('/api/courses/user', {
               headers: {
                 'Authorization': `Bearer ${user.token}`
               }

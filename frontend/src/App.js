@@ -10,6 +10,7 @@ import StuLogin from './pages/StuLogin';
 import StuSignup from './pages/StuSignup';
 import CareerQuiz from './pages/CareerQuiz';
 import AllCourses from './pages/AllCourses';
+import ModelAnswer from './pages/ModelAnswer';
 
 function App() {
   const { user } = useAuthContext();
@@ -23,6 +24,7 @@ function App() {
           <Route path='/StuSignup' element={ <StuSignup /> } />
           <Route path='/StuLogin' element={ <StuLogin /> } />
           <Route path='/CareerQuiz' element={ user ? <CareerQuiz/> : <Navigate to="/StuLogin" />} />
+          <Route path="/model-answer" element={<ModelAnswer />} />
           <Route path='/UniSignup' element={ <UniSignup/> } />
           <Route path='/UniLogin' element={ <UniLogin/> } />
           <Route path='/UniversityDashboard' element={ user ? <UniversityDashboard/> : <Navigate to="/UniLogin" />} />

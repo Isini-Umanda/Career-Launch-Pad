@@ -107,11 +107,29 @@ const updateCourse = async (req, res) => {
     res.status(200).json(course)
 }
 
+// Get courses by subject area
+const getCoursesBySubjectArea = async (req, res) => {
+    const { subject_area } = req.params;
+
+    try {
+        const courses = await Course.find({ subject_area });
+        console.log('Courses found:', courses); // Log courses found
+        res.status(200).json(courses);
+    } catch (error) {
+        console.error('Error in getCoursesBySubjectArea:', error);
+        res.status(500).json({ error: 'Failed to fetch courses.' });
+    }
+};
+
+
+
+
 module.exports = {
     getAllCourses,
     createCourse,
     getCourses,
     getCourse,
     deleteCourse,
-    updateCourse
+    updateCourse,
+    getCoursesBySubjectArea
 }

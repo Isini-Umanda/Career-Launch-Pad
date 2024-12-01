@@ -6,9 +6,11 @@ const {
     getAllCourses,
     getCourse,
     updateCourse,
-    deleteCourse
+    deleteCourse,
+    getCoursesBySubjectArea
  } = require('../controllers/courseController')
  const requireCourseAuth = require('../middleware/requireCourseAuth')
+ const requireStudentAuth = require('../middleware/requireStudentAuth');
 
 const router = express.Router()
 
@@ -30,6 +32,9 @@ router.delete('/:id', deleteCourse)
 
 //UPDATE a Cource
 router.patch('/:id', updateCourse)
+
+router.get('/subject/:subject_area', requireStudentAuth, getCoursesBySubjectArea);
+
 
 
 module.exports = router

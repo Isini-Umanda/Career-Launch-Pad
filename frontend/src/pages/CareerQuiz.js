@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import axios from 'axios';
@@ -8,21 +9,20 @@ const Survey = () => {
   const [currentPart, setCurrentPart] = useState(1);
   const [scores, setScores] = useState({});
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // Initialize navigate function
 
   const handleNext = () => {
-    // Validate current part before proceeding to the next part
     if (!validateCurrentPart()) {
       setError("Please answer all questions in this part before proceeding.");
       return;
     }
-    // Move to the next part
     setCurrentPart((prev) => Math.min(prev + 1, 10));
-    setError(null); // Clear any previous errors
+    setError(null);
   };
 
   const handleBack = () => {
     setCurrentPart((prev) => Math.max(prev - 1, 1));
-    setError(null); // Clear any previous errors
+    setError(null);
   };
 
   const handleOptionChange = (part, questionIndex, value) => {
@@ -34,19 +34,17 @@ const Survey = () => {
         [part]: updatedPartScores,
       };
     });
-    setError(null); // Clear error when an answer is selected
+    setError(null);
   };
 
-  // Validate if the current part is fully answered
   const validateCurrentPart = () => {
     const partScores = scores[currentPart] || {};
-    return Object.keys(partScores).length === 10; // All questions in the current part must be answered
+    return Object.keys(partScores).length === 10;
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Check if all parts are fully answered before submitting
     for (let part = 1; part <= 10; part++) {
       const partScores = scores[part] || {};
       if (Object.keys(partScores).length < 10) {
@@ -55,35 +53,32 @@ const Survey = () => {
       }
     }
 
-    // Clear any error before submitting
     setError(null);
 
-    // Calculate average score for each part
     const features = [];
     for (let part = 1; part <= 10; part++) {
       const partScores = scores[part] || {};
       const totalScore = Object.values(partScores).reduce((acc, score) => acc + score, 0);
       const averageScore = totalScore / 5;
-      console.log(`Average score for part ${part}:`, averageScore);
       features.push(averageScore);
     }
 
-    // Send the features to the Flask API
     try {
       const response = await axios.post('http://localhost:5000/predict', {
         features: features,
       });
-      console.log('Career Path:', response.data.career_path);
-      alert(`Recommended Career Path: ${response.data.career_path}`);
+      const careerPath = response.data.career_path; // Get the career path from the backend
+      navigate('/model-answer', { state: { careerPath } }); // Navigate to ModelAnswer.js with careerPath
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
-        alert(error.response.data.error); // Display specific error message from the backend
+        alert(error.response.data.error);
       } else {
         console.error('Error fetching career recommendation:', error);
         alert('There was an error fetching the career recommendation. Please try again.');
       }
     }
   };
+
 
   const partQuestions = {
     1: [
@@ -217,8 +212,6 @@ const Survey = () => {
         </h1>
         <p className="text-center text-lg mt-2 mb-6 text-gray-700">
           Answer a few simple questions and uncover the career path that's perfect for you.
-          Be honest in your responses for accurate results and personalized course recommendations.
-          Your dream future starts here!
         </p>
         <div className="bg-white shadow-md rounded p-8 max-w-3xl min-h-[800px]">
           <form onSubmit={handleSubmit}>
@@ -248,9 +241,7 @@ const Survey = () => {
                     </div>
                   </div>
                 ))}
-                {error && (
-                  <div className="text-red-500 font-medium mb-4">{error}</div>
-                )}
+                {error && <div className="text-red-500 font-medium mb-4">{error}</div>}
                 <div className="flex justify-between">
                   {currentPart > 1 && (
                     <button type="button" onClick={handleBack} className="bg-gray-500 text-white py-2 px-4 rounded mt-4">
