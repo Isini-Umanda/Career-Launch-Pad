@@ -28,14 +28,14 @@ const CourseDetails = ({ course }) => {
 
     return (
         <div className="hover:bg-sky-50 p-8 bg-zinc-50 rounded-md overflow-hidden shadow-lg">
-            <h1 className="text-sky-700 text-2xl p-4">{course.course_name}</h1>
-            <p className="break-words truncate-lines-3 text-sm mt-4 justify-evenly">{course.course_description}</p>
+            <h1 className="text-sky-700 text-2xl p-4 truncate">{course.course_name}</h1>
+            <p className="break-words truncate text-sm mt-4 justify-evenly">{course.course_description}</p>
             <p className=" text-sm">{course.subject_area}</p>
             <p className=" text-sm">{course.course_fee}</p>
             <p className=" text-sm">{course.required_result}</p>
             <p className="text-xs text-gray-400">{format(new Date(course.createdAt), 'yyyy-MM-dd')}</p>
-            <div className="p-5">
-              <span onClick={handleClick}className="bg-red-200 rounded-full hover:bg-red-400 justify-start py-2 px-3 text-xs font-bold cursor-pointer tracking-wider">Delete</span>
+            <div className="py-5">
+              <span onClick={handleClick}className="mt-4 px-4 py-2 bg-red-300 text-white rounded hover:bg-red-600">Delete</span>
             </div>
         </div>
     )

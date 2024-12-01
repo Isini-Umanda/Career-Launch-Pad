@@ -79,6 +79,20 @@ const Survey = () => {
     }
   };
 
+  const handleGenerateRandomAnswers = () => {
+    setScores((prevScores) => {
+      const updatedPartScores = {};
+      for (let i = 0; i < 10; i++) {
+        updatedPartScores[i] = Math.floor(Math.random() * 5) + 1;
+      }
+      return {
+        ...prevScores,
+        [currentPart]: updatedPartScores,
+      };
+    });
+    setError(null);
+  };
+
 
   const partQuestions = {
     1: [
@@ -248,6 +262,9 @@ const Survey = () => {
                       Back
                     </button>
                   )}
+                  <button type="button" onClick={handleGenerateRandomAnswers} className="bg-teal-900 text-white py-2 px-4 rounded mt-4">
+                    Random
+                  </button>
                   {currentPart < 10 ? (
                     <button type="button" onClick={handleNext} className="bg-teal-500 text-white py-2 px-4 rounded mt-4">
                       Next
